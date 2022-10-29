@@ -4,13 +4,14 @@ import java.util.Random;
 public class Main {
 
     static final double[][] DM_matrix = new double[40][40];
-    static final String[] passengerNameMatrix = {"Fatih Terim","Ramazan Terim","Berkay Terim","Azim Terim","Senol Gunes","Jorge Jesus","Ronaldo"
-            ,"","9.Person","10.Person","11.Person","12.Person","13.Person","14.Person","15.Person","16.Person","17.Person"
+    static final String[] passengerNameMatrix = {"1.Person","2.Person","3.Person","4.Person","5.Person","6.Person","7.Person"
+            ,"8.Person","9.Person","10.Person","11.Person","12.Person","13.Person","14.Person","15.Person","16.Person","17.Person"
             ,"18.Person","19.Person","20.Person","21.Person","22.Person","23.Person","24.Person","25.Person","26.Person","27.Person"
             ,"28.Person","29.Person","30.Person","31.Person","32.Person","33.Person","34.Person","35.Person","36.Person","37.Person"
             ,"38.Person","39.Person","40.Person"};
     static Random randomNm = new Random();
     static int[] placedPeopleIndexes = new int[40];
+    static double[] distanceToOther = new double[40];
 
     public static void main(String[] args) {
 
@@ -43,6 +44,7 @@ public class Main {
         String firstSeat = passengerNameMatrix[randomPassenger];
         System.out.println(firstSeat + randomPassenger);
         placedPeopleIndexes[0]= randomPassenger;
+        distanceToOther[0] = 0.0;
         for (int i = 0; i < array.length; i++) {
             array[i][randomPassenger] = 0.0;
         }
@@ -226,13 +228,14 @@ public class Main {
             for (Double d: distanceTotalArr) {
                 System.out.print(d +"  ");
             }
+            closestPerson = minNm;
 
         }
 
         for (int i = 0; i < array.length; i++) {
             array[i][closestPersonIndex] = 0.0;
         }
-
+        distanceToOther[currentSeatNumber-1] = closestPerson;
         placedPeopleIndexes[currentSeatNumber - 1] = closestPersonIndex;
         return closestPersonIndex;
     }
@@ -269,9 +272,32 @@ public class Main {
         int count = 0;
         int seatNo = 1;
         while (count <=36) {
+            System.out.println("     " + seatNo  + "       " + Integer.valueOf(seatNo+1) + "             "+
+                    Integer.valueOf(seatNo+2) + "     "  + Integer.valueOf(seatNo+3));
+            System.out.println(passengerNameMatrix[placedPeopleIndexes[count]] +"   " +
+                    passengerNameMatrix[placedPeopleIndexes[count+1]]
+                            + "     " + passengerNameMatrix[placedPeopleIndexes[count+2]] +
+                    "  "+passengerNameMatrix[placedPeopleIndexes[count+3]]);
+
+            System.out.println();
+            seatNo += 4;
+            count +=4;
+        }
+
+        count = 0;
+        seatNo =1;
+
+        System.out.println();
+        System.out.println();
+        System.out.println("***********************************************");
+
+        while (count <=36) {
             System.out.println("     " + seatNo  + "       " + Integer.valueOf(seatNo+1) + "             "+ Integer.valueOf(seatNo+2) + "     "  + Integer.valueOf(seatNo+3));
             System.out.println(passengerNameMatrix[placedPeopleIndexes[count]] +"   " + passengerNameMatrix[placedPeopleIndexes[count+1]]
-                            + "     " + passengerNameMatrix[placedPeopleIndexes[count+2]] + "  "+passengerNameMatrix[placedPeopleIndexes[count+3]]);
+                    + "     " + passengerNameMatrix[placedPeopleIndexes[count+2]] + "  "+passengerNameMatrix[placedPeopleIndexes[count+3]]);
+
+            System.out.println("   " + Math.round(distanceToOther[seatNo-1] * 10.0) / 10.0  + "   " + "   " + (distanceToOther[seatNo] * 10.0) / 10.0 + "   " + "        "
+                    + (distanceToOther[seatNo+1] * 10.0) / 10 + "   " +"   " + (distanceToOther[seatNo+2] * 10.0) / 10.0 + "   ");
             System.out.println();
             seatNo += 4;
             count +=4;
