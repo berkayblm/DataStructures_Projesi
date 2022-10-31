@@ -42,7 +42,6 @@ public class Main {
     static void placePassengers(double[][] array) {
         int randomPassenger = randomNm.nextInt(40); // ilk oturacak kisi random belirlenir
         String firstSeat = passengerNameMatrix[randomPassenger];
-        System.out.println(firstSeat + randomPassenger);
         placedPeopleIndexes[0]= randomPassenger;
         distanceToOther[0] = 0.0;
         for (int i = 0; i < array.length; i++) {
@@ -58,11 +57,6 @@ public class Main {
 
         }
 
-        for (Integer i : placedPeopleIndexes) {
-            System.out.println(i);
-        }
-
-        printOutDMarray(DM_matrix);
         printOutPassengerTable();
 
     }
@@ -86,8 +80,6 @@ public class Main {
 
                     totalForOnePerson = array[placedPeopleIndexes[currentSeatNumber - 5]][i]
                             + array[placedPeopleIndexes[currentSeatNumber - 4]][i];
-
-
 
                 }
                 distanceTotalArr[i] = totalForOnePerson;
@@ -126,8 +118,6 @@ public class Main {
                             distanceTotalArr[i] = totalForOnePerson;
                     }
                 }
-
-
 
             }
         }
@@ -224,10 +214,6 @@ public class Main {
 
             //currentPersonIndex = theClosestIndex;
             closestPersonIndex = theClosestIndex;
-            System.out.println(minNm);
-            for (Double d: distanceTotalArr) {
-                System.out.print(d +"  ");
-            }
             closestPerson = minNm;
 
         }
@@ -292,17 +278,29 @@ public class Main {
         System.out.println("***********************************************");
 
         while (count <=36) {
-            System.out.println("     " + seatNo  + "       " + Integer.valueOf(seatNo+1) + "             "+ Integer.valueOf(seatNo+2) + "     "  + Integer.valueOf(seatNo+3));
-            System.out.println(passengerNameMatrix[placedPeopleIndexes[count]] +"   " + passengerNameMatrix[placedPeopleIndexes[count+1]]
-                    + "     " + passengerNameMatrix[placedPeopleIndexes[count+2]] + "  "+passengerNameMatrix[placedPeopleIndexes[count+3]]);
+            System.out.println("     " + seatNo  + "       " + Integer.valueOf(seatNo+1) + "               "+
+                    Integer.valueOf(seatNo+2) + "       "  + Integer.valueOf(seatNo+3));
+            System.out.println(passengerNameMatrix[placedPeopleIndexes[count]] +"   " +
+                    passengerNameMatrix[placedPeopleIndexes[count+1]]
+                    + "     " + passengerNameMatrix[placedPeopleIndexes[count+2]] + "  "+
+                    passengerNameMatrix[placedPeopleIndexes[count+3]]);
 
-            System.out.println("   " + Math.round(distanceToOther[seatNo-1] * 10.0) / 10.0  + "   " + "   " + (distanceToOther[seatNo] * 10.0) / 10.0 + "   " + "        "
-                    + (distanceToOther[seatNo+1] * 10.0) / 10 + "   " +"   " + (distanceToOther[seatNo+2] * 10.0) / 10.0 + "   ");
+            System.out.println("   " + String.format("%.2f",distanceToOther[seatNo-1]) + "   " + "   " +
+                    String.format("%.2f",distanceToOther[seatNo]) + "   " + "        "
+                    + String.format("%.2f",distanceToOther[seatNo+1])+ "   " +"   " +
+                    String.format("%.2f",distanceToOther[seatNo+2])+ "   ");
+
             System.out.println();
             seatNo += 4;
             count +=4;
         }
 
+        System.out.println("**********************************************");
+        double total = 0;
+        for (Double d : distanceToOther) {
+            total  += d;
+        }
+        System.out.println("Total Distance of All Passengers : " + String.format("%.2f",total));
     }
 
 
